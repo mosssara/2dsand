@@ -1,0 +1,3 @@
+-render a singular pixel <br>
+-make constucter work <br>
+-how to run physic calculation each time
