@@ -1,3 +1,15 @@
 body {
     background-color: black;
 }
+
+#Playarea{
+    display: block;
+    margin: auto;
+    text-align: center;
+}
+
+#Title{
+    font-size: 72px;
+    color: white;
+    text-align: center;
+}
