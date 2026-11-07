@@ -53,30 +53,49 @@ function physic_calculation(){
     for(let y = wide-2 ;y >= 0;y--){
 
         const direction = Math.random() < 0.5;
-        
-        for(let x = 0; x < wide; x++){
-            if(grid[y][x] === null){
-                continue
-            }
-            if(grid[y][x] === 1 && grid[y+1][x] === null){
-                grid[y + 1][x] = 1;
-                grid[y][x] = null;
-                displacement(x,y);
-                ctx.fillStyle = "yellow"
-                ctx.fillRect(x,y+1,1,1)
-                continue
-            }
-            
-            if(grid[y][x] === 1 && grid[y+1][x-1] === null && grid[y+1][x+1] === null){
-                if(direction<0){
+        if (direction){
+            for(let x = 0; x < wide; x++){
+                //emtpy cell
+                if(grid[y][x] === null){
+                    continue
+                }
+                if(grid[y][x] === 1 && grid[y+1][x] === null){
+                    grid[y + 1][x] = 1;
+                    grid[y][x] = null;
+                    displacement(x,y);
+                    ctx.fillStyle = "yellow"
+                    ctx.fillRect(x,y+1,1,1)
+                    continue
+                }
+                
+                if(grid[y][x] === 1 && grid[y+1][x-1] === null && grid[y+1][x+1] === null){
+                    if(direction<0){
+                        grid[y + 1][x-1] = 1;
+                        grid[y][x] = null;
+                        displacement(x,y);
+                        ctx.fillStyle = "yellow"
+                        ctx.fillRect(x-1,y+1,1,1)
+                        continue
+                    }
+                    else{
+                        grid[y + 1][x+1] = 1;
+                        grid[y][x] = null;
+                        displacement(x,y);
+                        ctx.fillStyle = "yellow"
+                        ctx.fillRect(x+1,y+1,1,1)
+                        continue
+                    }
+                }
+                if(grid[y][x] === 1 && grid[y+1][x-1] === null ){
                     grid[y + 1][x-1] = 1;
                     grid[y][x] = null;
                     displacement(x,y);
                     ctx.fillStyle = "yellow"
                     ctx.fillRect(x-1,y+1,1,1)
                     continue
-                }
-                else{
+                }  
+                
+                if(grid[y][x] === 1 && grid[y+1][x+1] === null){
                     grid[y + 1][x+1] = 1;
                     grid[y][x] = null;
                     displacement(x,y);
@@ -84,25 +103,62 @@ function physic_calculation(){
                     ctx.fillRect(x+1,y+1,1,1)
                     continue
                 }
-            }
-            if(grid[y][x] === 1 && grid[y+1][x-1] === null ){
-                grid[y + 1][x-1] = 1;
-                grid[y][x] = null;
-                displacement(x,y);
-                ctx.fillStyle = "yellow"
-                ctx.fillRect(x-1,y+1,1,1)
-                continue
-            }  
-            
-            if(grid[y][x] === 1 && grid[y+1][x+1] === null){
-                grid[y + 1][x+1] = 1;
-                grid[y][x] = null;
-                displacement(x,y);
-                ctx.fillStyle = "yellow"
-                ctx.fillRect(x+1,y+1,1,1)
-                continue
-            }
         }
+        }else{
+            for(let x = wide-1; x >= 0; x--){
+                //emtpy cell
+                if(grid[y][x] === null){
+                    continue
+                }
+                if(grid[y][x] === 1 && grid[y+1][x] === null){
+                    grid[y + 1][x] = 1;
+                    grid[y][x] = null;
+                    displacement(x,y);
+                    ctx.fillStyle = "yellow"
+                    ctx.fillRect(x,y+1,1,1)
+                    continue
+                }
+                
+                if(grid[y][x] === 1 && grid[y+1][x-1] === null && grid[y+1][x+1] === null){
+                    if(direction<0){
+                        grid[y + 1][x-1] = 1;
+                        grid[y][x] = null;
+                        displacement(x,y);
+                        ctx.fillStyle = "yellow"
+                        ctx.fillRect(x-1,y+1,1,1)
+                        continue
+                    }
+                    else{
+                        grid[y + 1][x+1] = 1;
+                        grid[y][x] = null;
+                        displacement(x,y);
+                        ctx.fillStyle = "yellow"
+                        ctx.fillRect(x+1,y+1,1,1)
+                        continue
+                    }
+                }
+                if(grid[y][x] === 1 && grid[y+1][x-1] === null ){
+                    grid[y + 1][x-1] = 1;
+                    grid[y][x] = null;
+                    displacement(x,y);
+                    ctx.fillStyle = "yellow"
+                    ctx.fillRect(x-1,y+1,1,1)
+                    continue
+                }  
+                
+                if(grid[y][x] === 1 && grid[y+1][x+1] === null){
+                    grid[y + 1][x+1] = 1;
+                    grid[y][x] = null;
+                    displacement(x,y);
+                    ctx.fillStyle = "yellow"
+                    ctx.fillRect(x+1,y+1,1,1)
+                    continue
+                }
+        }
+    }
+
+    
+    
     }
 }
 /*function draw(){ //same as physic cal but just for redraw canvas|| unused due to change how physic calculation too many time in a frame
