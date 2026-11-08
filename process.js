@@ -29,8 +29,12 @@ canvas.addEventListener("mouseleave",function(event){
     pos_x = null
     pos_y = null
 })
-
-let brushSize = 50
+let select_mat = 1
+//1 = sand
+//2 = water
+//3 = brick/wall
+//null = air
+let brushSize = 5
 
 function placing(x, y) {
     for (let j = y; j < y + brushSize; j++) { //I am such a terrible person
@@ -48,10 +52,12 @@ function displacement(x,y){
     ctx.fillStyle = "grey"
     ctx.fillRect(x,y,1,1)
 }
-
+let cal = 0;
 function physic_calculation(){
     for(let y = wide-2 ;y >= 0;y--){
-
+        if(grid[y].every(values => values === null)){
+            continue
+        }
         const direction = Math.random() < 0.5;
         if (direction){
             for(let x = 0; x < wide; x++){
@@ -68,25 +74,16 @@ function physic_calculation(){
                     continue
                 }
                 
-                if(grid[y][x] === 1 && grid[y+1][x-1] === null && grid[y+1][x+1] === null){
-                    if(direction<0){
-                        grid[y + 1][x-1] = 1;
-                        grid[y][x] = null;
-                        displacement(x,y);
-                        ctx.fillStyle = "yellow"
-                        ctx.fillRect(x-1,y+1,1,1)
-                        continue
+                if(grid[y][x] === 1 && x >0 && x < wide-1 && grid[y+1][x-1] === null && grid[y+1][x+1] === null ){
+                    grid[y + 1][x-1] = 1;
+                    grid[y][x] = null;
+                    displacement(x,y);
+                    ctx.fillStyle = "yellow"
+                    ctx.fillRect(x-1,y+1,1,1)
+                    continue
                     }
-                    else{
-                        grid[y + 1][x+1] = 1;
-                        grid[y][x] = null;
-                        displacement(x,y);
-                        ctx.fillStyle = "yellow"
-                        ctx.fillRect(x+1,y+1,1,1)
-                        continue
-                    }
-                }
-                if(grid[y][x] === 1 && grid[y+1][x-1] === null ){
+                    
+                if(grid[y][x] === 1 && x >0 && grid[y+1][x-1] === null ){
                     grid[y + 1][x-1] = 1;
                     grid[y][x] = null;
                     displacement(x,y);
@@ -95,7 +92,7 @@ function physic_calculation(){
                     continue
                 }  
                 
-                if(grid[y][x] === 1 && grid[y+1][x+1] === null){
+                if(grid[y][x] === 1 && x < wide-1&& grid[y+1][x+1] === null){
                     grid[y + 1][x+1] = 1;
                     grid[y][x] = null;
                     displacement(x,y);
@@ -119,25 +116,17 @@ function physic_calculation(){
                     continue
                 }
                 
-                if(grid[y][x] === 1 && grid[y+1][x-1] === null && grid[y+1][x+1] === null){
-                    if(direction<0){
-                        grid[y + 1][x-1] = 1;
-                        grid[y][x] = null;
-                        displacement(x,y);
-                        ctx.fillStyle = "yellow"
-                        ctx.fillRect(x-1,y+1,1,1)
-                        continue
+                if(grid[y][x] === 1 && x < wide-1 && grid[y+1][x-1] === null && grid[y+1][x+1] === null ){
+                    grid[y + 1][x+1] = 1;
+                    grid[y][x] = null;
+                    displacement(x,y);
+                    ctx.fillStyle = "yellow"
+                    ctx.fillRect(x+1,y+1,1,1)
+                    continue
                     }
-                    else{
-                        grid[y + 1][x+1] = 1;
-                        grid[y][x] = null;
-                        displacement(x,y);
-                        ctx.fillStyle = "yellow"
-                        ctx.fillRect(x+1,y+1,1,1)
-                        continue
-                    }
-                }
-                if(grid[y][x] === 1 && grid[y+1][x-1] === null ){
+
+                
+                if(grid[y][x] === 1 && x >0 && grid[y+1][x-1] === null ){
                     grid[y + 1][x-1] = 1;
                     grid[y][x] = null;
                     displacement(x,y);
@@ -146,7 +135,7 @@ function physic_calculation(){
                     continue
                 }  
                 
-                if(grid[y][x] === 1 && grid[y+1][x+1] === null){
+                if(grid[y][x] === 1 && x < wide-1 && grid[y+1][x+1] === null ){
                     grid[y + 1][x+1] = 1;
                     grid[y][x] = null;
                     displacement(x,y);
