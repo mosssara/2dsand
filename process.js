@@ -34,14 +34,33 @@ let select_mat = 1
 //2 = water
 //3 = brick/wall
 //null = air
-let brushSize = 5
+function mat_to_color(mat_type){
+    switch(mat_type){
+        case null:
+            select_mat = null;
+            ctx.fillStyle = "grey";
+            break;
+        case 1:
+            select_mat = 1;
+            ctx.fillStyle = "yellow";
+            break
+    }
+}
+
+function mat_button(mat_type){
+    select_mat = mat_type
+    console.log(mat_type)
+    mat_to_color(mat_type)
+}
+let brushSize = 50
 
 function placing(x, y) {
-    for (let j = y; j < y + brushSize; j++) { //I am such a terrible person
-        for (let i = x; i < x + brushSize; i++) {
+    for (let j = y- Math.floor(brushSize/2); j < y + Math.floor(brushSize/2); j++) { //I am such a terrible person
+        for (let i = x - Math.floor(brushSize/2); i < x + Math.floor(brushSize/2); i++) {
 
             if (i >= 0 && i < wide && j >= 0 && j < wide) {
-                grid[j][i] = 1; //J IS A DUCKING Y
+                mat_to_color(select_mat)
+                grid[j][i] = select_mat; //J IS A DUCKING Y
                 ctx.fillRect(i, j, 1, 1);
             }
         }
@@ -52,8 +71,9 @@ function displacement(x,y){
     ctx.fillStyle = "grey"
     ctx.fillRect(x,y,1,1)
 }
+
 let cal = 0;
-function physic_calculation(){
+function sand_physic_calculation(){
     for(let y = wide-2 ;y >= 0;y--){
         if(grid[y].every(values => values === null)){
             continue
@@ -175,7 +195,7 @@ function process(){
         //grid[pos_y][pos_x] = "sand" //row and col that why y is first index
 
     }
-    physic_calculation();
+    sand_physic_calculation();
 
     
     
