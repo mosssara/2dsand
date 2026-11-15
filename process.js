@@ -78,25 +78,22 @@ function placing(x, y) {
   }
 }
 
-function displacement(x, y) {
-  ctx.fillStyle = "grey";
-  ctx.fillRect(x, y, 1, 1);
+function displacement(x, y) { //god forbid clearrect exist i already this make it so much better than using fillstyle to clear sand
+  ctx.clearRect(x, y, 1, 1);
 }
 
 function sandmove(x, y, x_move, y_move) {
   grid[y_move][x_move] = 1;
   grid[y][x] = null;
   displacement(x, y);
-  ctx.fillStyle = "yellow";
+  
   ctx.fillRect(x_move, y_move, 1, 1);
 }
 
 let cal = 0;
 function sand_physic_calculation() {
   for (let y = wide - 2; y >= 0; y--) {
-    if (grid[y].every((values) => values === null)) {
-      continue;
-    }
+    ctx.fillStyle = "yellow";
     const direction = Math.random() < 0.5;
     if (direction) {
       for (let x = 0; x < wide; x++) {
